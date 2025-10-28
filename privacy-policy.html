@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Email Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f7;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #1d1d1f;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            color: #1d1d1f;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #007aff;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.3em;
+            color: #333;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        strong {
+            color: #1d1d1f;
+        }
+
+        ul {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        a {
+            color: #007aff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .last-updated {
+            color: #86868b;
+            font-size: 0.9em;
+            margin-bottom: 30px;
+        }
+
+        .highlight-box {
+            background: #f0f7ff;
+            border-left: 4px solid #007aff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .summary-box {
+            background: #f6f6f6;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+            border: 2px solid #d2d2d7;
+        }
+
+        .summary-box h2 {
+            margin-top: 0;
+            border: none;
+        }
+
+        .provider-list {
+            background: #fafafa;
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+
+        code {
+            background: #f5f5f7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: "SF Mono", Monaco, "Courier New", monospace;
+            font-size: 0.9em;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #d2d2d7;
+            margin: 40px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Privacy Policy for Email Assistant</h1>
+        <p class="last-updated"><strong>Last Updated:</strong> January 2025</p>
+
+        <h2>Overview</h2>
+        <p>Email Assistant is a Chrome extension that helps users revise and improve their emails using AI providers. We are committed to protecting your privacy and being transparent about our data practices.</p>
+
+        <h2>Data Collection</h2>
+        <div class="highlight-box">
+            <p><strong>Email Assistant does NOT collect, store, or transmit any personal data to our servers.</strong></p>
+        </div>
+
+        <p>We do not have:</p>
+        <ul>
+            <li>Backend servers</li>
+            <li>Databases</li>
+            <li>Analytics services</li>
+            <li>Tracking systems</li>
+            <li>User accounts</li>
+        </ul>
+
+        <h2>What Data is Stored Locally</h2>
+        <p>The following data is stored <strong>locally on your device</strong> using Chrome's storage API:</p>
+
+        <h3>Stored in Chrome Local Storage</h3>
+        <ul>
+            <li><strong>API Keys:</strong> Your AI provider API keys (OpenAI, Anthropic, Google, DeepSeek, Azure)</li>
+            <li><strong>Settings:</strong> Provider selection, model preferences, system prompt settings</li>
+            <li><strong>UI Preferences:</strong> Theme (light/dark), panel state (open/closed)</li>
+        </ul>
+
+        <h3>Stored in Memory (Session Only)</h3>
+        <ul>
+            <li><strong>Response History:</strong> Last 10 AI responses (cleared when side panel closes)</li>
+            <li><strong>Current Email Text:</strong> Text you're working on (not persisted)</li>
+        </ul>
+
+        <h2>How Your Data is Used</h2>
+
+        <h3>API Keys</h3>
+        <ul>
+            <li>Stored locally in encrypted Chrome storage</li>
+            <li>Used only to authenticate with your selected AI provider</li>
+            <li>Never transmitted to us or any third party except the AI provider you select</li>
+            <li>Can be deleted at any time through extension settings or by uninstalling</li>
+        </ul>
+
+        <h3>Email Content</h3>
+        <ul>
+            <li>Your email text is sent <strong>directly</strong> to the AI provider you select</li>
+            <li>We never see, store, or have access to your email content</li>
+            <li>Communication happens directly between your browser and the AI provider</li>
+            <li>All connections use HTTPS encryption</li>
+        </ul>
+
+        <h2>Third-Party Services</h2>
+        <p>Email Assistant connects directly to the following AI providers based on your selection:</p>
+
+        <div class="provider-list">
+            <h3>Supported AI Providers</h3>
+
+            <p><strong>1. OpenAI</strong> (api.openai.com)</p>
+            <ul>
+                <li>Privacy Policy: <a href="https://openai.com/privacy" target="_blank">https://openai.com/privacy</a></li>
+                <li>Terms of Service: <a href="https://openai.com/terms" target="_blank">https://openai.com/terms</a></li>
+            </ul>
+
+            <p><strong>2. Anthropic</strong> (api.anthropic.com)</p>
+            <ul>
+                <li>Privacy Policy: <a href="https://www.anthropic.com/privacy" target="_blank">https://www.anthropic.com/privacy</a></li>
+                <li>Terms of Service: <a href="https://www.anthropic.com/legal/terms" target="_blank">https://www.anthropic.com/legal/terms</a></li>
+            </ul>
+
+            <p><strong>3. Google Gemini</strong> (generativelanguage.googleapis.com)</p>
+            <ul>
+                <li>Privacy Policy: <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></li>
+                <li>Terms of Service: <a href="https://policies.google.com/terms" target="_blank">https://policies.google.com/terms</a></li>
+            </ul>
+
+            <p><strong>4. DeepSeek</strong> (api.deepseek.com)</p>
+            <ul>
+                <li>Privacy Policy: <a href="https://www.deepseek.com/privacy" target="_blank">https://www.deepseek.com/privacy</a></li>
+                <li>Terms of Service: <a href="https://www.deepseek.com/terms" target="_blank">https://www.deepseek.com/terms</a></li>
+            </ul>
+
+            <p><strong>5. Microsoft Azure OpenAI</strong> (your custom endpoint)</p>
+            <ul>
+                <li>Privacy Policy: <a href="https://privacy.microsoft.com/" target="_blank">https://privacy.microsoft.com/</a></li>
+                <li>Terms of Service: <a href="https://azure.microsoft.com/support/legal/" target="_blank">https://azure.microsoft.com/support/legal/</a></li>
+            </ul>
+        </div>
+
+        <p><strong>Important:</strong> When you use Email Assistant, your email text is sent to the AI provider you select. Please review their privacy policies to understand how they handle your data.</p>
+
+        <h2>Chrome Permissions Explained</h2>
+        <p>Email Assistant requires the following Chrome permissions:</p>
+
+        <h3>storage</h3>
+        <p><strong>Purpose:</strong> To save your API keys and settings locally on your device<br>
+        <strong>Data Access:</strong> Chrome local storage only (stays on your device)</p>
+
+        <h3>sidePanel</h3>
+        <p><strong>Purpose:</strong> To display the extension's user interface in Chrome's side panel<br>
+        <strong>Data Access:</strong> None</p>
+
+        <h3>scripting</h3>
+        <p><strong>Purpose:</strong> To grab selected text when you click "Use Selection"<br>
+        <strong>Data Access:</strong> Selected text only, when you explicitly click the button</p>
+
+        <h3>activeTab</h3>
+        <p><strong>Purpose:</strong> To access the current page's content when grabbing text<br>
+        <strong>Data Access:</strong> Page content only when you click "Use Selection"</p>
+
+        <h3>clipboardRead</h3>
+        <p><strong>Purpose:</strong> To paste text when you click "Paste from Clipboard"<br>
+        <strong>Data Access:</strong> Clipboard content only when you explicitly click the button</p>
+
+        <h3>Host Permissions</h3>
+        <p>The extension requires permission to access the following domains to communicate with AI providers:</p>
+        <ul>
+            <li><code>https://api.openai.com/*</code></li>
+            <li><code>https://api.anthropic.com/*</code></li>
+            <li><code>https://generativelanguage.googleapis.com/*</code></li>
+            <li><code>https://api.deepseek.com/*</code></li>
+            <li><code>https://*.openai.azure.com/*</code></li>
+        </ul>
+        <p><strong>These permissions are used ONLY to send API requests to your chosen AI provider.</strong></p>
+
+        <h2>Data Security</h2>
+
+        <h3>Encryption</h3>
+        <ul>
+            <li>All API communications use HTTPS/TLS encryption</li>
+            <li>API keys are stored in Chrome's secure local storage</li>
+            <li>No data is transmitted over unencrypted connections</li>
+        </ul>
+
+        <h3>Access Control</h3>
+        <ul>
+            <li>Only you have access to your data (it's on your device)</li>
+            <li>Extension cannot access other extensions' data</li>
+            <li>Extension follows Chrome's security sandbox model</li>
+        </ul>
+
+        <h3>Data Retention</h3>
+        <ul>
+            <li>Local data persists until you clear browser data or uninstall</li>
+            <li>Session data (response history) is cleared when you close the side panel</li>
+            <li>No data is retained on our servers (we don't have servers)</li>
+        </ul>
+
+        <h2>Your Rights & Control</h2>
+        <p>You have complete control over your data:</p>
+
+        <h3>Right to Access</h3>
+        <ul>
+            <li>All your data is stored locally in Chrome</li>
+            <li>View stored data: Chrome DevTools → Application → Storage → Local Storage</li>
+        </ul>
+
+        <h3>Right to Delete</h3>
+        <ul>
+            <li><strong>Delete API Keys:</strong> Clear them in extension settings</li>
+            <li><strong>Delete All Data:</strong> Uninstall the extension or clear Chrome local storage</li>
+            <li><strong>Export Settings:</strong> Use the built-in export feature to backup</li>
+        </ul>
+
+        <h3>Right to Port Data</h3>
+        <ul>
+            <li>Export settings as JSON file</li>
+            <li>Import settings to another browser/device</li>
+        </ul>
+
+        <h2>Children's Privacy</h2>
+        <p>Email Assistant is not intended for use by children under 13 years of age. We do not knowingly collect personal information from children under 13.</p>
+
+        <h2>International Data Transfers</h2>
+        <ul>
+            <li>Your data stays on your device (no transfers)</li>
+            <li>When you use an AI provider, data is sent directly to their servers</li>
+            <li>AI providers may transfer data internationally - see their privacy policies</li>
+        </ul>
+
+        <h2>Changes to This Privacy Policy</h2>
+        <p>We may update this privacy policy from time to time. Changes will be:</p>
+        <ul>
+            <li>Posted to this document with updated "Last Updated" date</li>
+            <li>Noted in extension update changelog (for major changes)</li>
+            <li>Not retroactive (we don't have historical data to apply changes to)</li>
+        </ul>
+
+        <p><strong>How to stay informed:</strong></p>
+        <ul>
+            <li>Check this document periodically</li>
+            <li>Review update notes when updating the extension</li>
+        </ul>
+
+        <h2>California Privacy Rights (CCPA)</h2>
+        <p>If you are a California resident, you have the right to:</p>
+        <ul>
+            <li>Know what personal information is collected: <strong>None</strong> (all data is local)</li>
+            <li>Delete personal information: Uninstall the extension</li>
+            <li>Opt-out of sale of personal information: <strong>Not applicable</strong> (we don't sell data)</li>
+        </ul>
+
+        <h2>European Privacy Rights (GDPR)</h2>
+        <p>If you are in the European Economic Area, you have the right to:</p>
+        <ul>
+            <li>Access your data: All stored locally on your device</li>
+            <li>Rectify your data: Edit in extension settings</li>
+            <li>Erase your data: Uninstall extension or clear settings</li>
+            <li>Data portability: Export settings as JSON</li>
+            <li>Object to processing: Don't use the extension or don't provide API keys</li>
+        </ul>
+        <p><strong>Legal basis for processing:</strong> Consent (you choose to install and use the extension)</p>
+
+        <h2>Cookies</h2>
+        <p>Email Assistant does not use cookies. All data is stored via Chrome's storage API.</p>
+
+        <h2>Analytics & Tracking</h2>
+        <p>Email Assistant does <strong>NOT</strong> use:</p>
+        <ul>
+            <li>Google Analytics</li>
+            <li>Telemetry</li>
+            <li>Usage tracking</li>
+            <li>Error reporting services</li>
+            <li>Advertising networks</li>
+        </ul>
+        <p>We do not track how you use the extension.</p>
+
+        <h2>Contact Information</h2>
+        <p>For privacy-related questions or concerns, please contact us through the Chrome Web Store support page.</p>
+
+        <h2>Compliance</h2>
+        <p>Email Assistant is designed to comply with:</p>
+        <ul>
+            <li>GDPR (European Union)</li>
+            <li>CCPA (California)</li>
+            <li>Chrome Web Store Privacy Policy Requirements</li>
+            <li>General privacy best practices</li>
+        </ul>
+
+        <h2>Disclaimer</h2>
+        <div class="highlight-box">
+            <p><strong>IMPORTANT:</strong> Email Assistant is a client-side tool that facilitates communication with AI providers. We:</p>
+            <ul>
+                <li>Do not guarantee the privacy practices of third-party AI providers</li>
+                <li>Are not responsible for data breaches at AI provider companies</li>
+                <li>Do not control how AI providers use or store your data</li>
+                <li>Recommend reviewing each AI provider's privacy policy before use</li>
+            </ul>
+        </div>
+
+        <hr>
+
+        <div class="summary-box">
+            <h2>Summary (TL;DR)</h2>
+            <ul>
+                <li>✅ <strong>We DON'T collect your data</strong> - Everything stays on your device</li>
+                <li>✅ <strong>We DON'T have servers</strong> - No backend infrastructure</li>
+                <li>✅ <strong>We DON'T see your emails</strong> - Direct connection to AI providers</li>
+                <li>✅ <strong>We DON'T track you</strong> - No analytics or telemetry</li>
+                <li>✅ <strong>You OWN your data</strong> - Stored locally, delete anytime</li>
+            </ul>
+            <p><strong>Your API keys and email content are YOUR business, not ours.</strong></p>
+        </div>
+
+        <hr>
+
+        <p style="text-align: center; color: #86868b; font-size: 0.9em;">
+            <em>This privacy policy was last updated on January 2025 and is effective immediately.</em>
+        </p>
+    </div>
+</body>
+</html>
