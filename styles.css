@@ -190,6 +190,7 @@ body {
   flex: 1;
   padding: 16px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* Main Content Area */
@@ -621,6 +622,11 @@ details {
   margin-bottom: 12px;
   border-radius: var(--radius-lg);
   overflow: hidden;
+  width: 100%;
+}
+
+.sidebar-content details {
+  max-width: 100%;
 }
 
 summary {
@@ -672,6 +678,9 @@ details > div {
   animation: slideDown var(--transition-normal);
   backdrop-filter: var(--blur-glass);
   -webkit-backdrop-filter: var(--blur-glass);
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 @keyframes slideDown {
@@ -702,6 +711,8 @@ details > div {
   box-shadow: var(--shadow-sm);
   backdrop-filter: var(--blur-glass);
   -webkit-backdrop-filter: var(--blur-glass);
+  width: 100%;
+  overflow: hidden;
 }
 
 .card:hover {
@@ -724,11 +735,27 @@ details > div {
   margin: 8px 0;
 }
 
+.card .row .input-wrapper {
+  flex: 1;
+  min-width: 0;
+}
+
+.card .row input:not(.input-wrapper input) {
+  flex: 1;
+  min-width: 0;
+}
+
+.card .row select {
+  flex: 1;
+  min-width: 0;
+}
+
 .card label {
-  min-width: 110px;
+  min-width: 90px;
   font-size: 13px;
   color: var(--text-secondary);
   font-weight: 500;
+  flex-shrink: 0;
 }
 
 /* Key Status Indicator */
@@ -846,8 +873,14 @@ details > div {
   margin: 12px 0;
 }
 
+.prompt-preset label {
+  flex-shrink: 0;
+  min-width: auto;
+}
+
 .prompt-preset select {
   flex: 1;
+  min-width: 0;
 }
 
 .custom-prompt {
@@ -857,6 +890,7 @@ details > div {
 .custom-prompt textarea {
   min-height: 80px;
   font-size: 13px;
+  width: 100%;
 }
 
 /* Toast Notifications */
