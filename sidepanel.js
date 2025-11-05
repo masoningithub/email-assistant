@@ -114,8 +114,15 @@ function setupEventListeners() {
   $('#revise').addEventListener('click', () => send('revise'));
   $('#makeFormal').addEventListener('click', () => send('formal'));
   $('#makeCasual').addEventListener('click', () => send('casual'));
+  $('#makeFriendly').addEventListener('click', () => send('friendly'));
   $('#shorten').addEventListener('click', () => send('shorten'));
   $('#expand').addEventListener('click', () => send('expand'));
+  $('#simplify').addEventListener('click', () => send('simplify'));
+  $('#grammarCheck').addEventListener('click', () => send('grammar'));
+  $('#professional').addEventListener('click', () => send('professional'));
+  $('#summarize').addEventListener('click', () => send('summarize'));
+  $('#addUrgency').addEventListener('click', () => send('urgent'));
+  $('#soften').addEventListener('click', () => send('soften'));
   $('#cancelStream').addEventListener('click', cancelStream);
 
   // Output actions
@@ -604,8 +611,15 @@ function buildPrompt(kind, text) {
     revise: `${contextPrefix}Revise the following email for clarity, conciseness, and a friendly but professional tone. Keep the original meaning. Return only the improved email text.\n\nEmail:\n${text}`,
     formal: `${contextPrefix}Rewrite the following email in a formal, professional business tone. Use proper formal language and maintain high professionalism.\n\nEmail:\n${text}`,
     casual: `${contextPrefix}Rewrite the following email in a casual, friendly tone while remaining professional. Be conversational and approachable.\n\nEmail:\n${text}`,
+    friendly: `${contextPrefix}Rewrite the following email with a warm, friendly, and approachable tone. Make it personable while maintaining professionalism.\n\nEmail:\n${text}`,
     shorten: `${contextPrefix}Make the following email more concise. Remove unnecessary words while keeping the key message and maintaining professionalism.\n\nEmail:\n${text}`,
-    expand: `${contextPrefix}Expand the following email with more detail and context. Make it more comprehensive while maintaining clarity and professionalism.\n\nEmail:\n${text}`
+    expand: `${contextPrefix}Expand the following email with more detail and context. Make it more comprehensive while maintaining clarity and professionalism.\n\nEmail:\n${text}`,
+    simplify: `${contextPrefix}Simplify the following email to make it easier to understand. Use clear, straightforward language and avoid jargon. Return only the simplified email text.\n\nEmail:\n${text}`,
+    grammar: `${contextPrefix}Fix all grammar, spelling, and punctuation errors in the following email. Improve sentence structure while preserving the original meaning and tone. Return only the corrected email text.\n\nEmail:\n${text}`,
+    professional: `${contextPrefix}Rewrite the following email with a highly professional business tone. Make it polished, articulate, and suitable for corporate communication.\n\nEmail:\n${text}`,
+    summarize: `${contextPrefix}Create a concise summary of the following email. Capture the key points and main message in a brief, clear format.\n\nEmail:\n${text}`,
+    urgent: `${contextPrefix}Rewrite the following email to convey urgency and include a clear call-to-action. Make it compelling while remaining professional.\n\nEmail:\n${text}`,
+    soften: `${contextPrefix}Rewrite the following email with a softer, gentler tone. Make it less direct and more diplomatic while maintaining the core message.\n\nEmail:\n${text}`
   };
 
   return prompts[kind] || text;
