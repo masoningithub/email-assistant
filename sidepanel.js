@@ -12,6 +12,8 @@ const statusEl = $('#status');
 const charCountEl = $('#charCount');
 const costEstimateEl = $('#costEstimate');
 const providerStatusEl = $('#providerStatus');
+const emailContextEl = $('#emailContext');
+const contextCharCountEl = $('#contextCharCount');
 
 // Settings fields
 const settingsFields = [
@@ -27,6 +29,7 @@ let historyIndex = -1;
 let currentOriginalText = '';
 let lastRequestTime = 0;
 const RATE_LIMIT_MS = 1000; // 1 second between requests
+let sidebarOpen = false;
 
 // System Prompt Presets
 const SYSTEM_PROMPTS = {
@@ -60,6 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   await restoreUIState();
   updateKeyStatusIndicators();
   updateCharCount();
+  updateContextCharCount();
   setupEventListeners();
 
   // Auto-focus input
@@ -71,6 +75,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ============================================================================
 
 function setupEventListeners() {
+  // Sidebar toggle
+  $('#sidebarToggle').addEventListener('click', toggleSidebar);
+  $('#sidebarClose').addEventListener('click', toggleSidebar);
+  $('#sidebarBackdrop').addEventListener('click', toggleSidebar);
+
   // Theme toggle
   $('#themeToggle').addEventListener('click', toggleTheme);
 
@@ -97,6 +106,10 @@ function setupEventListeners() {
   $('#clearInput').addEventListener('click', clearInput);
   inputEl.addEventListener('input', onInputChange);
 
+  // Email context actions
+  $('#clearContext').addEventListener('click', clearContext);
+  emailContextEl.addEventListener('input', onContextChange);
+
   // Operation buttons
   $('#revise').addEventListener('click', () => send('revise'));
   $('#makeFormal').addEventListener('click', () => send('formal'));
@@ -121,6 +134,7 @@ function setupEventListeners() {
   // Settings panel state persistence
   $('#settings').addEventListener('toggle', saveUIState);
   $('#promptSettings').addEventListener('toggle', saveUIState);
+  $('#contextSettings').addEventListener('toggle', saveUIState);
 
   // API key input changes
   settingsFields.forEach(field => {
@@ -129,6 +143,19 @@ function setupEventListeners() {
       el.addEventListener('input', updateKeyStatusIndicators);
     }
   });
+}
+
+// ============================================================================
+// Sidebar Management
+// ============================================================================
+
+function toggleSidebar() {
+  const sidebar = $('#settingsSidebar');
+  const backdrop = $('#sidebarBackdrop');
+  sidebarOpen = !sidebarOpen;
+  sidebar.classList.toggle('open', sidebarOpen);
+  backdrop.classList.toggle('active', sidebarOpen);
+  saveUIState();
 }
 
 // ============================================================================
@@ -155,7 +182,7 @@ async function restoreTheme() {
 // ============================================================================
 
 async function restoreSettings() {
-  const data = await chrome.storage.local.get([...settingsFields, 'promptPreset', 'customPrompt']);
+  const data = await chrome.storage.local.get([...settingsFields, 'promptPreset', 'customPrompt', 'emailContext']);
 
   for (const k of settingsFields) {
     const el = document.getElementById(k);
@@ -169,6 +196,11 @@ async function restoreSettings() {
 
   if (data.customPrompt) {
     $('#customPrompt').value = data.customPrompt;
+  }
+
+  if (data.emailContext) {
+    emailContextEl.value = data.emailContext;
+    updateContextCharCount();
   }
 
   // Auto-select provider with configured key on load (silent - no toast)
@@ -185,6 +217,9 @@ async function saveSettings() {
   // Save prompt settings
   put.promptPreset = $('#promptPreset').value;
   put.customPrompt = $('#customPrompt').value;
+
+  // Save email context
+  put.emailContext = emailContextEl.value;
 
   await chrome.storage.local.set(put);
   updateKeyStatusIndicators();
@@ -346,6 +381,8 @@ async function saveUIState() {
   const state = {
     settingsOpen: $('#settings').hasAttribute('open'),
     promptSettingsOpen: $('#promptSettings').hasAttribute('open'),
+    contextSettingsOpen: $('#contextSettings').hasAttribute('open'),
+    sidebarOpen: sidebarOpen,
     provider: providerEl.value,
     model: modelEl.value
   };
@@ -358,6 +395,12 @@ async function restoreUIState() {
 
   if (uiState.settingsOpen) $('#settings').setAttribute('open', '');
   if (uiState.promptSettingsOpen) $('#promptSettings').setAttribute('open', '');
+  if (uiState.contextSettingsOpen) $('#contextSettings').setAttribute('open', '');
+  if (uiState.sidebarOpen) {
+    sidebarOpen = true;
+    $('#settingsSidebar').classList.add('open');
+    $('#sidebarBackdrop').classList.add('active');
+  }
   if (uiState.provider) providerEl.value = uiState.provider;
   if (uiState.model) modelEl.value = uiState.model;
 
@@ -505,6 +548,38 @@ function updateCharCount() {
 }
 
 // ============================================================================
+// Email Context Management
+// ============================================================================
+
+function clearContext() {
+  emailContextEl.value = '';
+  updateContextCharCount();
+  $('#clearContext').classList.add('hidden');
+  saveSettings();
+}
+
+function onContextChange() {
+  updateContextCharCount();
+  const hasText = emailContextEl.value.trim().length > 0;
+  $('#clearContext').classList.toggle('hidden', !hasText);
+  saveSettings();
+}
+
+function updateContextCharCount() {
+  const count = emailContextEl.value.length;
+  const limit = 8000;
+  contextCharCountEl.textContent = `${count} / ${limit}`;
+
+  if (count > limit * 0.9) {
+    contextCharCountEl.className = 'char-count error';
+  } else if (count > limit * 0.7) {
+    contextCharCountEl.className = 'char-count warning';
+  } else {
+    contextCharCountEl.className = 'char-count';
+  }
+}
+
+// ============================================================================
 // Password Toggle
 // ============================================================================
 
@@ -520,12 +595,17 @@ function togglePassword(targetId) {
 // ============================================================================
 
 function buildPrompt(kind, text) {
+  const context = emailContextEl.value.trim();
+  const contextPrefix = context
+    ? `Background Context / Email Chain:\n${context}\n\n---\n\n`
+    : '';
+
   const prompts = {
-    revise: `Revise the following email for clarity, conciseness, and a friendly but professional tone. Keep the original meaning. Return only the improved email text.\n\nEmail:\n${text}`,
-    formal: `Rewrite the following email in a formal, professional business tone. Use proper formal language and maintain high professionalism.\n\nEmail:\n${text}`,
-    casual: `Rewrite the following email in a casual, friendly tone while remaining professional. Be conversational and approachable.\n\nEmail:\n${text}`,
-    shorten: `Make the following email more concise. Remove unnecessary words while keeping the key message and maintaining professionalism.\n\nEmail:\n${text}`,
-    expand: `Expand the following email with more detail and context. Make it more comprehensive while maintaining clarity and professionalism.\n\nEmail:\n${text}`
+    revise: `${contextPrefix}Revise the following email for clarity, conciseness, and a friendly but professional tone. Keep the original meaning. Return only the improved email text.\n\nEmail:\n${text}`,
+    formal: `${contextPrefix}Rewrite the following email in a formal, professional business tone. Use proper formal language and maintain high professionalism.\n\nEmail:\n${text}`,
+    casual: `${contextPrefix}Rewrite the following email in a casual, friendly tone while remaining professional. Be conversational and approachable.\n\nEmail:\n${text}`,
+    shorten: `${contextPrefix}Make the following email more concise. Remove unnecessary words while keeping the key message and maintaining professionalism.\n\nEmail:\n${text}`,
+    expand: `${contextPrefix}Expand the following email with more detail and context. Make it more comprehensive while maintaining clarity and professionalism.\n\nEmail:\n${text}`
   };
 
   return prompts[kind] || text;

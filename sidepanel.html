@@ -7,19 +7,26 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <!-- Header with gradient title -->
-    <header>
-      <div>
-        <h1>✨ Email Assistant</h1>
-        <p class="small" style="margin: 4px 0 0 0; opacity: 0.7;">Perfect your emails with AI</p>
-      </div>
-      <button class="theme-toggle" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌓</button>
-    </header>
+    <!-- Backdrop for mobile sidebar -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-    <!-- Settings Panel -->
-    <details id="settings">
+    <!-- Settings Sidebar Toggle Button -->
+    <button class="sidebar-toggle" id="sidebarToggle" title="Toggle Settings" aria-label="Toggle settings sidebar">
+      <span class="icon">⚙️</span>
+      <span class="text">Settings</span>
+    </button>
+
+    <!-- Settings Sidebar -->
+    <aside class="settings-sidebar" id="settingsSidebar">
+      <div class="sidebar-header">
+        <h2>⚙️ Settings</h2>
+        <button class="sidebar-close" id="sidebarClose" title="Close Settings" aria-label="Close settings sidebar">✕</button>
+      </div>
+      <div class="sidebar-content">
+        <!-- API Keys Section -->
+    <details id="settings" open>
       <summary>
-        <span>⚙️ Settings</span>
+        <span>🔑 API Keys</span>
       </summary>
       <div>
         <!-- OpenAI -->
@@ -121,7 +128,7 @@
     </details>
 
     <!-- System Prompt Preset -->
-    <details id="promptSettings">
+    <details id="promptSettings" open>
       <summary>
         <span>💬 System Prompt</span>
       </summary>
@@ -143,6 +150,19 @@
         </div>
       </div>
     </details>
+      </div><!-- End sidebar-content -->
+    </aside><!-- End settings-sidebar -->
+
+    <!-- Main Content Area -->
+    <main class="main-content" id="mainContent">
+    <!-- Header with gradient title -->
+    <header>
+      <div>
+        <h1>✨ Email Assistant</h1>
+        <p class="small" style="margin: 4px 0 0 0; opacity: 0.7;">Perfect your emails with AI</p>
+      </div>
+      <button class="theme-toggle" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌓</button>
+    </header>
 
     <div class="divider"></div>
 
@@ -173,6 +193,23 @@
         </button>
       </div>
     </section>
+
+    <!-- Email Chain / Background Context -->
+    <details id="contextSettings">
+      <summary>
+        <span>📧 Email Chain / Context (Optional)</span>
+      </summary>
+      <div>
+        <p class="small" style="margin: 0 0 8px 0; color: var(--text-secondary);">
+          Provide email chain or background context to help AI understand the conversation history and generate better responses.
+        </p>
+        <div class="textarea-wrapper">
+          <textarea id="emailContext" placeholder="Paste previous email exchanges or context here...&#10;&#10;Example:&#10;From: john@example.com&#10;Subject: Re: Project Update&#10;Hi team, following up on yesterday's discussion...&#10;&#10;From: sarah@example.com&#10;Thanks for the update. I have a few questions..." aria-label="Email context input"></textarea>
+          <div class="char-count" id="contextCharCount" aria-live="polite">0 / 8000</div>
+          <button class="clear-textarea hidden" id="clearContext" title="Clear context" aria-label="Clear context text">✕</button>
+        </div>
+      </div>
+    </details>
 
     <!-- Input Area -->
     <section aria-label="Email Input">
@@ -268,6 +305,7 @@
         💡 <strong>Tip:</strong> Press <kbd style="padding: 2px 6px; background: var(--btn-secondary-bg); border-radius: 4px; font-size: 11px;">Ctrl+Enter</kbd> to send
       </p>
     </footer>
+    </main><!-- End main-content -->
 
     <script type="module" src="sidepanel.js"></script>
   </body>
