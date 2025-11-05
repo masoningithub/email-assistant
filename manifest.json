@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "Email Assistant",
+  "version": "0.1.0",
+  "description": "Revise emails and ask for info via multiple AI providers in a Chrome side panel.",
+  "action": {
+    "default_title": "Email Assistant"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "sidePanel",
+    "scripting",
+    "activeTab",
+    "clipboardRead"
+  ],
+  "host_permissions": [
+    "https://api.openai.com/*",
+    "https://api.anthropic.com/*",
+    "https://generativelanguage.googleapis.com/*",
+    "https://api.deepseek.com/*",
+    "https://*.openai.azure.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

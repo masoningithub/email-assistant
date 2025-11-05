@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Email Assistant</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header with gradient title -->
+    <header>
+      <div>
+        <h1>✨ Email Assistant</h1>
+        <p class="small" style="margin: 4px 0 0 0; opacity: 0.7;">Perfect your emails with AI</p>
+      </div>
+      <button class="theme-toggle" id="themeToggle" title="Toggle dark mode" aria-label="Toggle dark mode">🌓</button>
+    </header>
+
+    <!-- Settings Panel -->
+    <details id="settings">
+      <summary>
+        <span>⚙️ Settings</span>
+      </summary>
+      <div>
+        <!-- OpenAI -->
+        <div class="card">
+          <h3>
+            OpenAI
+            <span class="key-status missing" id="status-openai">✗ No key</span>
+          </h3>
+          <div class="row">
+            <label>API Key</label>
+            <div class="input-wrapper">
+              <input id="openai_key" type="password" placeholder="sk-..." autocomplete="off" aria-label="OpenAI API Key" />
+              <button type="button" class="toggle-password" data-target="openai_key" title="Show/Hide" aria-label="Toggle password visibility">👁️</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Anthropic -->
+        <div class="card">
+          <h3>
+            Anthropic
+            <span class="key-status missing" id="status-anthropic">✗ No key</span>
+          </h3>
+          <div class="row">
+            <label>API Key</label>
+            <div class="input-wrapper">
+              <input id="anthropic_key" type="password" placeholder="sk-ant-..." autocomplete="off" aria-label="Anthropic API Key" />
+              <button type="button" class="toggle-password" data-target="anthropic_key" title="Show/Hide" aria-label="Toggle password visibility">👁️</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Google Gemini -->
+        <div class="card">
+          <h3>
+            Google Gemini
+            <span class="key-status missing" id="status-google">✗ No key</span>
+          </h3>
+          <div class="row">
+            <label>API Key</label>
+            <div class="input-wrapper">
+              <input id="google_key" type="password" placeholder="AIza..." autocomplete="off" aria-label="Google Gemini API Key" />
+              <button type="button" class="toggle-password" data-target="google_key" title="Show/Hide" aria-label="Toggle password visibility">👁️</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- DeepSeek -->
+        <div class="card">
+          <h3>
+            DeepSeek
+            <span class="key-status missing" id="status-deepseek">✗ No key</span>
+          </h3>
+          <div class="row">
+            <label>API Key</label>
+            <div class="input-wrapper">
+              <input id="deepseek_key" type="password" placeholder="sk-..." autocomplete="off" aria-label="DeepSeek API Key" />
+              <button type="button" class="toggle-password" data-target="deepseek_key" title="Show/Hide" aria-label="Toggle password visibility">👁️</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Azure OpenAI -->
+        <div class="card">
+          <h3>
+            Azure OpenAI
+            <span class="key-status missing" id="status-azure">✗ Not configured</span>
+          </h3>
+          <div class="row">
+            <label>API Key</label>
+            <div class="input-wrapper">
+              <input id="azure_api_key" type="password" placeholder="Azure key" autocomplete="off" aria-label="Azure OpenAI API Key" />
+              <button type="button" class="toggle-password" data-target="azure_api_key" title="Show/Hide" aria-label="Toggle password visibility">👁️</button>
+            </div>
+          </div>
+          <div class="row">
+            <label>Endpoint</label>
+            <input id="azure_endpoint" placeholder="https://...openai.azure.com" autocomplete="off" aria-label="Azure Endpoint" />
+          </div>
+          <div class="row">
+            <label>Deployment</label>
+            <input id="azure_deployment" placeholder="gpt-4o-mini" autocomplete="off" aria-label="Azure Deployment" />
+          </div>
+          <div class="row">
+            <label>API Version</label>
+            <input id="azure_api_version" placeholder="2024-02-01" value="2024-02-01" autocomplete="off" aria-label="Azure API Version" />
+          </div>
+          <div class="provider-hint">💡 All 4 fields required for Azure</div>
+        </div>
+
+        <div class="btn-group" style="margin-top: 16px;">
+          <button class="btn primary" id="saveSettings">💾 Save Settings</button>
+          <button class="btn" id="exportSettings">📤 Export</button>
+          <button class="btn" id="importSettings">📥 Import</button>
+          <input type="file" id="importFile" accept=".json" style="display: none;" aria-label="Import settings file" />
+        </div>
+        <div class="status" id="settingsStatus"></div>
+      </div>
+    </details>
+
+    <!-- System Prompt Preset -->
+    <details id="promptSettings">
+      <summary>
+        <span>💬 System Prompt</span>
+      </summary>
+      <div>
+        <div class="prompt-preset">
+          <label>Preset:</label>
+          <select id="promptPreset" aria-label="System prompt preset">
+            <option value="default">Default (Helpful Assistant)</option>
+            <option value="professional">Professional Email Expert</option>
+            <option value="concise">Concise & Direct</option>
+            <option value="friendly">Friendly & Casual</option>
+            <option value="formal">Formal Business</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+        <div class="custom-prompt hidden" id="customPromptBox">
+          <label class="small">Custom System Prompt:</label>
+          <textarea id="customPrompt" placeholder="Enter custom system prompt..." aria-label="Custom system prompt"></textarea>
+        </div>
+      </div>
+    </details>
+
+    <div class="divider"></div>
+
+    <!-- Provider Selection -->
+    <section aria-label="AI Provider Selection">
+      <div class="provider-row">
+        <label for="provider">Provider:</label>
+        <select id="provider" aria-label="AI Provider">
+          <option value="openai">OpenAI</option>
+          <option value="anthropic">Anthropic (Claude)</option>
+          <option value="google">Google Gemini</option>
+          <option value="deepseek">DeepSeek</option>
+          <option value="azure">Azure OpenAI</option>
+        </select>
+        <input id="model" placeholder="Model (optional)" style="max-width: 150px;" aria-label="Model name (optional)" />
+      </div>
+      <div class="status" id="providerStatus"></div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section aria-label="Quick Actions">
+      <div class="quick-actions">
+        <button class="btn" id="grabSelection" title="Use selected text from the current page">
+          <span>📋</span> Use Selection
+        </button>
+        <button class="btn" id="pasteFromClipboard" title="Paste from clipboard">
+          <span>📄</span> Paste
+        </button>
+      </div>
+    </section>
+
+    <!-- Input Area -->
+    <section aria-label="Email Input">
+      <div class="textarea-wrapper">
+        <textarea id="input" placeholder="Paste or type your email text here..." aria-label="Email text input"></textarea>
+        <div class="char-count" id="charCount" aria-live="polite">0 / 4000</div>
+        <button class="clear-textarea hidden" id="clearInput" title="Clear input" aria-label="Clear input text">✕</button>
+      </div>
+    </section>
+
+    <!-- Operation Buttons -->
+    <section aria-label="Email Operations">
+      <div class="operations-grid">
+        <button class="btn primary" id="revise" title="Revise for clarity and professionalism">
+          <span>✨</span> Revise
+        </button>
+        <button class="btn" id="makeFormal" title="Make more formal and professional">
+          <span>🎩</span> Formal
+        </button>
+        <button class="btn" id="makeCasual" title="Make more casual and friendly">
+          <span>😊</span> Casual
+        </button>
+        <button class="btn" id="shorten" title="Make more concise">
+          <span>✂️</span> Shorten
+        </button>
+        <button class="btn" id="expand" title="Add more detail">
+          <span>📝</span> Expand
+        </button>
+        <button class="btn danger hidden" id="cancelStream" title="Cancel current request">
+          <span>⏹️</span> Cancel
+        </button>
+      </div>
+    </section>
+
+    <!-- Status & Cost Estimate -->
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <div class="cost-estimate hidden" id="costEstimate" aria-label="Token and cost estimate">
+      <div class="cost-item">
+        <label>Input Tokens</label>
+        <div class="value" id="inputTokens">-</div>
+      </div>
+      <div class="cost-item">
+        <label>Output Tokens</label>
+        <div class="value" id="outputTokens">-</div>
+      </div>
+      <div class="cost-item">
+        <label>Est. Cost</label>
+        <div class="value" id="estimatedCost">-</div>
+      </div>
+    </div>
+
+    <!-- Output Area -->
+    <section aria-label="AI Response">
+      <div class="out" id="output" role="region" aria-live="polite"></div>
+    </section>
+
+    <!-- Output Actions -->
+    <div class="output-actions">
+      <button class="btn" id="copyOutput" title="Copy to clipboard" disabled aria-label="Copy output to clipboard">
+        <span>📋</span> Copy
+      </button>
+      <button class="btn" id="clearOutput" title="Clear output" disabled aria-label="Clear output">
+        <span>🗑️</span> Clear
+      </button>
+      <button class="btn" id="downloadOutput" title="Download as text file" disabled aria-label="Download output as text file">
+        <span>💾</span> Download
+      </button>
+      <button class="btn" id="toggleDiff" title="Compare with original" disabled aria-label="Toggle comparison view">
+        <span>🔄</span> Compare
+      </button>
+      <div class="history-controls" role="navigation" aria-label="Response history">
+        <button class="btn small" id="historyPrev" title="Previous version" disabled aria-label="Previous response">←</button>
+        <span id="historyInfo" aria-live="polite">-</span>
+        <button class="btn small" id="historyNext" title="Next version" disabled aria-label="Next response">→</button>
+      </div>
+    </div>
+
+    <!-- Diff View (Hidden by default) -->
+    <div class="diff-view hidden" id="diffView" role="region" aria-label="Comparison view">
+      <div class="diff-panel">
+        <h4>Original</h4>
+        <div class="content" id="diffOriginal"></div>
+      </div>
+      <div class="diff-panel">
+        <h4>Revised</h4>
+        <div class="content" id="diffRevised"></div>
+      </div>
+    </div>
+
+    <!-- Footer with keyboard shortcuts hint -->
+    <footer style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-light); text-align: center;">
+      <p class="small" style="margin: 0; opacity: 0.6;">
+        💡 <strong>Tip:</strong> Press <kbd style="padding: 2px 6px; background: var(--btn-secondary-bg); border-radius: 4px; font-size: 11px;">Ctrl+Enter</kbd> to send
+      </p>
+    </footer>
+
+    <script type="module" src="sidepanel.js"></script>
+  </body>
+</html>
